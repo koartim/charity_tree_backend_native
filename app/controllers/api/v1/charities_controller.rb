@@ -1,7 +1,8 @@
 class Api::V1::CharitiesController < ApplicationController
 
   def index
-    @charities = Charity.all
+    response = RestClient.get("https://api.data.charitynavigator.org/v2/Organizations?categoryID=6&app_id=#{ENV["APP_KEY"]}&app_key=#{ENV["API_KEY"]}")
+    @charities = JSON.parse(response)
     render json: @charities
   end
 
